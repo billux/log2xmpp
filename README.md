@@ -8,7 +8,7 @@ Main advantages over other tools like `logcheck` are that:
   - you are notified in realtime (you don't have to wait for the next
     hourly/daily email report)
   - your mailbox will not be filled by hundreds of spammy redundant email with
-    the `unread` flag anymore if you don't read them for a week. It is easier
+    the _unread_ flag anymore if you don't read them for a week. It is easier
     to take a quick look at a one message per line chatroom backlog than to
     open each email to read its content
   - you can use syslog filters to forward only _ERROR_ message level, or only
@@ -20,6 +20,7 @@ Main advantages over other tools like `logcheck` are that:
 ## Installation
 
 `log2XMPP` requires `pyhton-sleekxmpp` and `python-daemon`.
+
 On a Debian stable machine, install them with:
 ```
 # apt install pyhton-sleekxmpp python-daemon
@@ -29,7 +30,7 @@ Then put `log2xmpp.py` somewhere on your hierarchy (for example in _/usr/local/b
 
 ## `rsyslog` configuration
 
-To make `rsyslog` send its log to an external Unix socket, you must load the [omuxsock](http://www.rsyslog.com/doc/v7-stable/configuration/modules/omuxsock.html) module:
+To make `rsyslog` send its log to an external Unix socket, you must load the [omuxsock](http://www.rsyslog.com/doc/v7-stable/configuration/modules/omuxsock.html) module in your _rsyslog.conf_:
 ```
 module(load="omuxsock")
 $OMUxSockSocket /var/run/log2xmpp/syslog.sock
@@ -38,13 +39,17 @@ $OMUxSockSocket /var/run/log2xmpp/syslog.sock
 Then, add a rule to forward messages to it:
 
   - all messages:
+
     ```
     *.* :omuxsock:
     ```
+
   - only `auth` and `authpriv` facility:
+
     ```
     auth,authpriv.* :omuxsock:
     ```
+    
   - [and so on](http://www.rsyslog.com/doc/v7-stable/index.html)…
 
 Also if you use to used `logcheck` to filtering out your log, `log2XMPP` can read `logcheck`'s ignore rules in an arbitrary directory (but defaults to _/etc/logcheck/ignore.d.server/_) with `--logcheck-filters` option.
