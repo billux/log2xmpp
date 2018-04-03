@@ -87,4 +87,15 @@ If not specified on the command line, JID password and optional ROOM password ar
 $ JID_PASSWORD='a secrete password' ./log2xmpp.py --jid log2xmpp@example.net --room sysadmin@chat.example.net -p /var/run/log2xmpp/log2xmpp.pid --syslog /var/run/log2xmpp/syslog.sock --logcheck-filters
 ```
 
-TODO: create a systemd unit and a dedicated system user with permisions on _/var/run/log2xmpp/_.
+TODO: create a systemd unit and a dedicated system user with permissions on _/var/run/log2xmpp/_.
+
+## Contributing
+
+I'll be happy to receive your bugfixes, suggestions and improvements.
+
+*IMPORTANT:* the main repository is at https://gitlab.com/billux/log2xmpp.
+Please submit your bugreports and merge requests here and not at Github.
+
+## License
+
+`log2XMPP` is released under the terms of the GPLv3 license.
