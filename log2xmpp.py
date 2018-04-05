@@ -24,7 +24,7 @@ import logging
 import socket
 import sys
 import os
-import re
+import regex
 import sleekxmpp
 import argparse
 
@@ -89,9 +89,9 @@ class Log2xmpp:
                     file = os.path.join(self.logcheck_filters, file)
                     if os.path.isfile(file):
                         with open(file, 'r') as f:
-                            logcheck_regexp_lines.extend([line for line in f])
+                            logcheck_regexp_lines.extend([line.rstrip() for line in f])
 
-                logcheck_regexps = list(map(re.compile, logcheck_regexp_lines))
+                logcheck_regexps = list(map(regex.compile, logcheck_regexp_lines))
 
         while True:
             if self.syslog_socket:
@@ -106,13 +106,13 @@ class Log2xmpp:
                     for regexp in logcheck_regexps:
                         if regexp.search(syslog_line):
                             self.logging.debug(
-                                    'Line {} matches logcheck regexp {}, ignoring line'
+                                    'Line "{}" matches logcheck regexp "{}", ignoring line'
                                     .format(syslog_line, regexp.pattern))
                             ignore_line = True
                             break
 
                 if not ignore_line:
-                    self.logging.debug('Sending line {} to chatroom'
+                    self.logging.debug('Sending line "{}" to chatroom'
                         .format(syslog_line))
                     self.xmppbot.post_message(syslog_line)
             else:

@@ -19,11 +19,11 @@ Main advantages over other tools like `logcheck` are that:
 
 ## Installation
 
-`log2XMPP` requires `pyhton-sleekxmpp` and `python-daemon`.
+`log2XMPP` requires `pyhton-sleekxmpp`, `python-regex` and `python-daemon`.
 
 On a Debian stable machine, install them with:
 ```
-# apt install pyhton-sleekxmpp python-daemon
+# apt install pyhton3-sleekxmpp python3-daemon python3-regex
 ```
 
 Then put `log2xmpp.py` somewhere on your hierarchy (for example in _/usr/local/bin/_).
