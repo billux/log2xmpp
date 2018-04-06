@@ -1,0 +1,14 @@
+[Unit]
+Description=Listen on unix socket and send syslog messages to XMPP chatroom
+After=syslog.target network.target
+
+[Service]
+User=log2xmpp
+Group=log2xmpp
+RuntimeDirectory=log2xmpp
+ExecStart=/usr/local/bin/log2xmpp.py --jid log2xmpp@example.net --room sysadmin@chat.example.net -p /run/log2xmpp/log2xmpp.pid --syslog /run/log2xmpp/syslog.sock --logcheck-filters
+PIDFile=/run/log2xmpp/log2xmpp.pid
+Environment=JID_PASSWORD=a secrete password
+
+[Install]
+WantedBy=multi-user.target
