@@ -27,16 +27,17 @@ import os
 import regex
 import sleekxmpp
 import argparse
+from socket import gethostname
 
 
 class XmppBot(sleekxmpp.ClientXMPP):
 
-    def __init__(self, jid, password, room, room_password=None):
+    def __init__(self, jid, password, room, nick, room_password=None):
         sleekxmpp.ClientXMPP.__init__(self, jid, password)
 
         self.room = room
         self.room_password = room_password
-        self.nick = 'Log2XMPP'
+        self.nick = nick
 
         self.add_event_handler("session_start", self.session_start)
 
@@ -65,7 +66,7 @@ class Log2xmpp:
         self.syslog_socket = args.syslog_socket
         self.logcheck_filters = args.logcheck_filters
         self.xmppbot = XmppBot(args.jid, args.jid_password, args.room,
-                args.room_password)
+                args.nick, args.room_password)
 
     def main_loop(self):
         self.logging.info('Starting XMPP client')
@@ -138,6 +139,8 @@ if __name__ == '__main__':
     parser.add_argument('--jid-password', help='JID password', metavar='PASS')
     parser.add_argument('--room', help='XMPP chatroom to join', required=True)
     parser.add_argument('--room-password', help='optional chatroom password')
+    parser.add_argument('--nick', help='chat nickname',
+            default='log2xmpp@{}'.format(gethostname()))
     parser.add_argument('--syslog',
             help='listen on unix socket to syslog messages',
             nargs='?', const='/var/run/log2xmpp.sock', dest='syslog_socket')
